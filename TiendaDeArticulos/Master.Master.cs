@@ -15,7 +15,8 @@ namespace TiendaDeArticulos
         {
 
             imgAvatar.ImageUrl = "https://simg.nicepng.com/png/small/202-2022264_usuario-annimo-usuario-annimo-user-icon-png-transparent.png";
-            if (!(Page is Login || Page is Default || Page is Registro || Page is Error) || Seguridad.sesionActiva(Session["user"]))
+            if (!(Page is Login || Page is Default || Page is Registro || Page is Error || Page is Celulares || Page is Audio || Page is Media
+            || Page is Televisores) || Seguridad.sesionActiva(Session["user"]))
             {
                 
                 if (!(Seguridad.sesionActiva(Session["user"])))

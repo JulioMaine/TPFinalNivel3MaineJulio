@@ -4,13 +4,24 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using dominio;
+using negocio;
 
 namespace TiendaDeArticulos
 {
     public partial class Celulares : System.Web.UI.Page
     {
+        public List<Articulo> ListaArticulos { get; set; }
         protected void Page_Load(object sender, EventArgs e)
         {
+            ArticuloNegocio negocio = new ArticuloNegocio();
+            ListaArticulos = negocio.listar().FindAll(x => x.Categoria.Descripcion == "Celulares");
+
+            if (!IsPostBack)
+            {
+                repRepetidor.DataSource = ListaArticulos;
+                repRepetidor.DataBind();
+            }
 
         }
     }
