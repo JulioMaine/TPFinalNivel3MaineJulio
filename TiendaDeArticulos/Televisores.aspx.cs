@@ -24,5 +24,10 @@ namespace TiendaDeArticulos
             }
 
         }
+
+        protected void btnDetalle_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

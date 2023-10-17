@@ -38,8 +38,10 @@
                             <li class="nav-item">
                                 <a class="nav-link fs-6" href="Audio.aspx">Audio</a>
                             </li>
-                            <% if (negocio.Seguridad.sesionActiva(Session["user"])) {%>
-                            <% if (negocio.Seguridad.esAdmin(Session["user"])){ %>
+                            <% if (negocio.Seguridad.sesionActiva(Session["user"]))
+                                {%>
+                            <% if (negocio.Seguridad.esAdmin(Session["user"]))
+                                { %>
                             <li class="nav-item">
                                 <a class="nav-link fs-6" href="ListaDeArticulos.aspx">Lista de Artículos</a>
                             </li>
@@ -56,32 +58,31 @@
                         <form class="d-flex">
                             <% if (!negocio.Seguridad.sesionActiva(Session["user"]))
                                 { %>
-                             <ul class="navbar-nav me-2">
-                            <li class="nav-item dropdown">
-                                <a href="#" class="dropdown-toggle btn btn-success" role="button" data-bs-toggle="dropdown" aria-expanded="false">Ingresar</a>
-                                <ul class="dropdown-menu bg-body-tertiary" style="height: 170px; width: 260px; margin-top: 9px">
-                                    <li>
-                                        <asp:TextBox ID="txtUser" runat="server" CssClass="form-control m-2" Style="width: 240px"></asp:TextBox>
-                                    </li>
-                                    <li>
-                                        <asp:TextBox ID="txtPassword" TextMode="Password" runat="server" CssClass="form-control m-2" Style="width: 240px"></asp:TextBox>
-                                    </li>
-                                    <li>
-                                        <asp:Button ID="btnEntrar" CssClass="btn btn-danger m-2" runat="server" OnClick="btnEntrar_Click" Text="Entrar" />
-                                    </li>
-                                </ul>
-                            </li>
-                        </ul>
-                        <a id="btnRegistrase" href="Registro.aspx" class="btn btn-primary me-3">Registrase</a>
+                            <ul class="navbar-nav me-2">
+                                <li class="nav-item dropdown">
+                                    <a href="#" class="dropdown-toggle btn btn-success" role="button" data-bs-toggle="dropdown" aria-expanded="false">Ingresar</a>
+                                    <ul class="dropdown-menu bg-body-tertiary" style="height: 170px; width: 260px; margin-top: 9px">
+                                        <li>
+                                            <asp:TextBox ID="txtUser" runat="server" CssClass="form-control m-2" Style="width: 240px"></asp:TextBox>
+                                        </li>
+                                        <li>
+                                            <asp:TextBox ID="txtPassword" TextMode="Password" runat="server" CssClass="form-control m-2" Style="width: 240px"></asp:TextBox>
+                                        </li>
+                                        <li>
+                                            <asp:Button ID="btnEntrar" CssClass="btn btn-danger m-2" runat="server" OnClick="btnEntrar_Click" Text="Entrar" />
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                            <a id="btnRegistrase" href="Registro.aspx" class="btn btn-primary me-3">Registrase</a>
                             <% }
                                 else
                                 { %>
                             <asp:Button ID="btnSalir" runat="server" class="btn btn-danger mx-2" Text="Salir" OnClick="btnSalir_Click" />
-                            <asp:Label ID="lblUser" runat="server"  CssClass="text-white me-2" Text=""></asp:Label>
+                            <asp:Label ID="lblUser" runat="server" CssClass="text-white me-2" Text=""></asp:Label>
                             <% } %>
-                            <asp:Image ID="imgAvatar" runat="server" Style="width: 40px; height: 40px; margin-right:15px; border-radius:50%;" 
-                                 />
-                        </form>      
+                            <asp:Image ID="imgAvatar" runat="server" Style="width: 40px; height: 40px; margin-right: 15px; border-radius: 50%;" />
+                        </form>
                     </div>
                 </div>
             </nav>

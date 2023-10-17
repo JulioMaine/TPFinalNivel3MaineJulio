@@ -3,7 +3,6 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <asp:ScriptManager runat="server" />
-    <div class="container">
         <div class="row">
             <div class="col-6">
                 <div class="mb-3">
@@ -19,11 +18,11 @@
                     <asp:TextBox ID="txtbNombre" class="form-control" runat="server"></asp:TextBox>
                 </div>
                 <div class="mb-3">
-                    <asp:Label for="ddlTipo" CssClass="form-label" runat="server">Categoria</asp:Label>
+                    <asp:Label for="ddlCategoria" CssClass="form-label" runat="server">Categoria</asp:Label>
                     <asp:DropDownList ID="ddlCategoria" runat="server" CssClass="form-select"></asp:DropDownList>
                 </div>
                 <div class="mb-3">
-                    <asp:Label for="ddlDebilidad" runat="server" Text="Label" CssClass="form-label">Marca</asp:Label>
+                    <asp:Label for="ddlMarca" runat="server" Text="Label" CssClass="form-label">Marca</asp:Label>
                     <asp:DropDownList ID="ddlMarca" runat="server" CssClass="form-select"></asp:DropDownList>
                 </div>
                  <div class="mb-3">
