@@ -15,6 +15,15 @@ namespace TiendaDeArticulos
     {
 
         /// <summary>
+        /// Control scripManagerDetalle.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.ScriptManager scripManagerDetalle;
+
+        /// <summary>
         /// Control txtbNombre.
         /// </summary>
         /// <remarks>
@@ -49,6 +58,15 @@ namespace TiendaDeArticulos
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtPrecio;
+
+        /// <summary>
+        /// Control btnComprar.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnComprar;
 
         /// <summary>
         /// Control txtbDescripcion.

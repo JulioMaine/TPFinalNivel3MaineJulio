@@ -23,12 +23,19 @@ namespace TiendaDeArticulos
                 txtbDescripcion.Text = articuloSeleccionado.Descripcion;
                 txtbUrlImagen.Text = articuloSeleccionado.ImagenUrl;
                 imgArticulo.ImageUrl = articuloSeleccionado.ImagenUrl;
-                txtPrecio.Text = articuloSeleccionado.Precio.ToString("0.00");
+                txtPrecio.Text = "$" + articuloSeleccionado.Precio.ToString("0.00");
                 txtMarca.Text = articuloSeleccionado.Marca.Descripcion;
                 txtCategoria.Text = articuloSeleccionado.Categoria.Descripcion;
 
             }
 
         }
+
+        protected void btnComprar_Click(object sender, EventArgs e)
+        {
+            Session.Add("error", "Este es proyecto de practica, lamentablemente los articulos no existen.");
+            Response.Redirect("Error.aspx", false);
+        }
+
     }
 }
