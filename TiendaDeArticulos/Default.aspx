@@ -13,6 +13,7 @@
                                 <h5 class="card-title"><%#Eval("Nombre")%></h5>
                                 <p class="card-text"><%#Eval("Descripcion")%></p>
                                 <a href="Detalle.aspx?Id=<%#Eval("Id") %>" class="btn btn-primary">Ver detalle</a>
+                                <a class="card-text text-sm-start" href="Favoritos.aspx?Id=<%#Eval("Id") %>">⭐</a>
                             </div>
                         </div>
                     </div>
