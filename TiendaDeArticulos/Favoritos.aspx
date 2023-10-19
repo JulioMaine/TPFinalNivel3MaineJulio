@@ -12,6 +12,7 @@
                                 <h5 class="card-title"><%#Eval("Nombre")%></h5>
                                 <p class="card-text"><%#Eval("Descripcion")%></p>
                                 <a href="Detalle.aspx?Id=<%#Eval("Id") %>" class="btn btn-primary">Ver detalle</a>
+                                <asp:Button Text="text" runat="server" />
                             </div>
                         </div>
                     </div>

@@ -20,8 +20,17 @@ namespace TiendaDeArticulos
                 return;
             }
 
+
+
             ArticuloNegocio negocio = new ArticuloNegocio();
+            FavoritoNegocio favorito = new FavoritoNegocio();
             User user = (User)Session["user"];
+
+            if(Request.QueryString["Id"] != null)
+            {
+                favorito.insertarFavorito(user.Id.ToString(), Request.QueryString["Id"].ToString());
+            }
+
             repRepetidor.DataSource = negocio.listarFavoritos(user.Id.ToString());
             repRepetidor.DataBind();
         }

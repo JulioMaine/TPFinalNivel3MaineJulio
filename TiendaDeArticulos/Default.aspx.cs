@@ -30,7 +30,7 @@ namespace TiendaDeArticulos
         {
             FavoritoNegocio negocio = new FavoritoNegocio();
             User user = (User)Session["user"];
-            negocio.insertarFavorito(user.Id.ToString(), )
+            negocio.insertarFavorito(user.Id.ToString(), "3");
         }
     }
 }
