@@ -25,5 +25,12 @@ namespace TiendaDeArticulos
             }
 
         }
+
+        protected void btnAgregarFavorito_Click(object sender, EventArgs e)
+        {
+            FavoritoNegocio negocio = new FavoritoNegocio();
+            User user = (User)Session["user"];
+            negocio.insertarFavorito(user.Id.ToString(), )
+        }
     }
 }

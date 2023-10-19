@@ -84,6 +84,49 @@ namespace negocio
             }
         }
 
+        public List<Articulo> listarFavoritos(string id)
+        {
+            List<Articulo> lista = new List<Articulo>();
+            AccesoDatos datos = new AccesoDatos();
+            try
+            {
+                datos.setearConsulta("select A.Id, A.Codigo, A.Nombre, A.Descripcion, ImagenUrl, M.Descripcion Marca, A.IdMarca, C.Descripcion Categoria, A.IdCategoria, Precio from ARTICULOS A, MARCAS M, CATEGORIAS C, USERS U, FAVORITOS F where A.IdMarca = M.Id and A.IdCategoria = C.Id and U.Id = F.IdUser and A.Id = F.IdArticulo and U.Id = " + id);
+                datos.ejecutarLectura();
+
+                while (datos.Lector.Read())
+                {
+                    Articulo aux = new Articulo();
+                    aux.Id = datos.Lector.GetInt32(0);
+                    aux.Codigo = datos.Lector.GetString(1);
+                    aux.Nombre = datos.Lector.GetString(2);
+                    aux.Descripcion = datos.Lector.GetString(3);
+                    aux.ImagenUrl = datos.Lector.GetString(4);
+                    aux.Marca = new Marca();
+                    aux.Marca.Descripcion = datos.Lector.GetString(5);
+                    aux.Marca.Id = datos.Lector.GetInt32(6);
+                    aux.Categoria = new Categoria();
+                    aux.Categoria.Descripcion = datos.Lector.GetString(7);
+                    aux.Categoria.Id = datos.Lector.GetInt32(8);
+                    aux.Precio = datos.Lector.GetDecimal(9);
+
+
+                    lista.Add(aux);
+                }
+
+                return lista;
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+
+        }
+
         public void eliminar(int id)
         {
             AccesoDatos datos = new AccesoDatos();
