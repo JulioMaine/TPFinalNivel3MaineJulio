@@ -33,7 +33,7 @@ namespace TiendaDeArticulos
 
         protected void btnComprar_Click(object sender, EventArgs e)
         {
-            Session.Add("error", "Este es proyecto de practica, lamentablemente los articulos no existen.");
+            Session.Add("error", "Este es un proyecto de practica, lamentablemente los articulos no existen.");
             Response.Redirect("Error.aspx", false);
         }
 

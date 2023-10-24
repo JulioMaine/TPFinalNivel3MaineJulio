@@ -47,7 +47,7 @@
                             </li>
                             <% } %>
                             <li class="nav-item">
-                                <a class="nav-link fs-6" href="Favoritos.aspx">Favoritos</a>
+                                <a class="nav-link fs-6" href="Favoritos.aspx">Favoritos(⭐)</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link fs-6" href="Perfil.aspx">Mi Perfil</a>
