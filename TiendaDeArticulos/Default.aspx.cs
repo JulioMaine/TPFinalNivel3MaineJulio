@@ -23,6 +23,8 @@ namespace TiendaDeArticulos
                 repRepetidor.DataSource = ListaArticulos;
                 repRepetidor.DataBind();
             }
+
+            
         }
 
         protected void btnAgregarFavorito_Click(object sender, EventArgs e)

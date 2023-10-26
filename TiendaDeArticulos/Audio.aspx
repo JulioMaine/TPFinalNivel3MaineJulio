@@ -2,7 +2,7 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-    <h1>Articulos de audio:</h1>    
+    <h2>Articulos de audio:</h2>    
     <div class="row row-cols-1 row-cols-md-3 g-5 mt-3">
             <asp:Repeater runat="server" ID="repRepetidor">
                 <ItemTemplate>
