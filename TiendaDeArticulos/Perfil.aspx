@@ -1,47 +1,63 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Master.Master" AutoEventWireup="true" CodeBehind="Perfil.aspx.cs" Inherits="TiendaDeArticulos.Perfil" %>
+
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-     <div class="row">
-         <div class="col-1" style="width: 25px">
+    <div class="row">
+        <div class="col-2">
         </div>
         <div class="col">
-            <h1 class="fs-3">Mi Perfil</h1>
+            <h1 class="text-white">Mi Perfil</h1>
+        </div>
+        <div class="col-2">
         </div>
     </div>
     <div class="row">
-        <div class="col-1" style="width: 25px">
+
+        <div class="col-2">
         </div>
-        <div class="col-md-3">
+        <div class="col-4">
             <div class="mb-3">
-                <asp:Label runat="server" class="form-label fs-6 h1 font-weight-bold" Text="Email"></asp:Label>
-                <asp:TextBox Id="txtEmail" class="form-control" runat="server"></asp:TextBox>
+                <asp:Label runat="server" class="form-label fs-6 h1 text-white" Text="Email"></asp:Label>
+                <asp:TextBox ID="txtEmail" class="form-control bg-dark text-white" runat="server"></asp:TextBox>
+            </div>
+
+            <div class="mb-3">
+                <hr />
+                <asp:Label runat="server" class="form-label fs-6 h1 text-white" Text="Nombre"></asp:Label>
+                <asp:TextBox ID="txtNombre" class="form-control bg-dark text-white" runat="server"></asp:TextBox>
             </div>
             <div class="mb-3">
                 <hr />
-                <asp:Label runat="server"  class="form-label fs-6 h1 font-weight-bold" Text="Nombre"></asp:Label>
-                <asp:TextBox Id="txtNombre" class="form-control" runat="server"></asp:TextBox>
+                <asp:Label runat="server" class="form-label fs-6 h1 text-white" Text="Apellido"></asp:Label>
+                <asp:TextBox ID="txtApellido" class="form-control bg-dark text-white" runat="server"></asp:TextBox>
             </div>
             <div class="mb-3">
                 <hr />
-                <asp:Label runat="server"  class="form-label fs-6 h1 font-weight-bold" Text="Apellido"></asp:Label>
-                <asp:TextBox id="txtApellido" class="form-control" runat="server"></asp:TextBox>
+                <asp:Button runat="server" ID="btnGuardar" Text="Guardar" OnClick="btnGuardar_Click" CssClass="btn btn-primary" />
+                <a href="/">Regresar</a>
             </div>
         </div>
-        <div class="col-md-3">
+        <div class="col-3">
             <div class="mb-3">
-                <asp:Label runat="server" class="form-label fs-6 h1 font-weight-bold" Text="Imagen de Perfil"></asp:Label>
-                <input type="file" id="txtImage" class="form-control" name="name" runat="server" /> 
+                <asp:Label runat="server" class="form-label fs-6 h1 text-white" Text="Imagen de Perfil"></asp:Label>
+                <input type="file" id="txtImage" class="form-control bg-dark text-white" name="name" runat="server" />
             </div>
-            <asp:Image runat="server" id="imgPerfil" imageUrl="https://www.palomacornejo.com/wp-content/uploads/2021/08/no-image.jpg" cssclass="img-fluid mb-3"></asp:Image>
+            <asp:Image runat="server" ID="imgPerfil" ImageUrl="https://www.palomacornejo.com/wp-content/uploads/2021/08/no-image.jpg" CssClass="img-fluid mb-3"></asp:Image>
         </div>
+        <div class="col-2">
+        </div>
+
     </div>
     <div class="row">
-        <div class="col-1" style="width: 25px">
+
+        <div class="col-2">
         </div>
-        <div class="col-md-4">   
-            <asp:Button runat="server" id="btnGuardar" Text="Guardar" OnClick="btnGuardar_Click"  cssclass="btn btn-primary" />
-            <a href="/">Regresar</a>
+        <div class="col">
+            <%--<asp:Button runat="server" ID="btnGuardar" Text="Guardar" OnClick="btnGuardar_Click" CssClass="btn btn-primary" />
+            <a href="/">Regresar</a>--%>
+        </div>
+        <div class="col-2">
         </div>
     </div>
 </asp:Content>

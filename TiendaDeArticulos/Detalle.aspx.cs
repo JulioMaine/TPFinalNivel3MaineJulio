@@ -13,28 +13,44 @@ namespace TiendaDeArticulos
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            string id = Request.QueryString["Id"] != null ? Request.QueryString["Id"].ToString() : "";
-            if (id != "" && !IsPostBack)
+            try
             {
-                ArticuloNegocio negocio = new ArticuloNegocio();
-                Articulo articuloSeleccionado = negocio.listar(id)[0];
+                string id = Request.QueryString["Id"] != null ? Request.QueryString["Id"].ToString() : "";
+                if (id != "" && !IsPostBack)
+                {
+                    ArticuloNegocio negocio = new ArticuloNegocio();
+                    Articulo articuloSeleccionado = negocio.listar(id)[0];
 
-                txtbNombre.Text = articuloSeleccionado.Nombre;
-                txtbDescripcion.Text = articuloSeleccionado.Descripcion;
-                txtbUrlImagen.Text = articuloSeleccionado.ImagenUrl;
-                imgArticulo.ImageUrl = articuloSeleccionado.ImagenUrl;
-                txtPrecio.Text = "$" + articuloSeleccionado.Precio.ToString("0.00");
-                txtMarca.Text = articuloSeleccionado.Marca.Descripcion;
-                txtCategoria.Text = articuloSeleccionado.Categoria.Descripcion;
+                    txtbNombre.Text = articuloSeleccionado.Nombre;
+                    txtbDescripcion.Text = articuloSeleccionado.Descripcion;
+                    imgArticulo.ImageUrl = articuloSeleccionado.ImagenUrl;
+                    txtPrecio.Text = "$" + articuloSeleccionado.Precio.ToString("0.00");
+                    txtMarca.Text = articuloSeleccionado.Marca.Descripcion;
+                    txtCategoria.Text = articuloSeleccionado.Categoria.Descripcion;
 
+                }
+
+            }
+            catch (Exception ex)
+            {
+                Session.Add("error", ex);
+                Response.Redirect("Error.aspx", false);
             }
 
         }
 
         protected void btnComprar_Click(object sender, EventArgs e)
         {
-            Session.Add("error", "Este es un proyecto de practica, lamentablemente los articulos no existen.");
-            Response.Redirect("Error.aspx", false);
+            try
+            {
+                Response.Redirect("Error.aspx", false);
+                Session.Add("error", "Este es un proyecto de practica, los articulos no existen.");
+            }
+            catch (Exception ex)
+            {
+                Session.Add("error", ex);
+                Response.Redirect("Error.aspx", false);
+            }
         }
 
     }

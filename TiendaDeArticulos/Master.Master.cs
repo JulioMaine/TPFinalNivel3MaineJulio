@@ -18,7 +18,7 @@ namespace TiendaDeArticulos
             if (!(Page is Login || Page is Default || Page is Registro || Page is Error || Page is Celulares || Page is Audio || Page is Media
             || Page is Televisores) || Seguridad.sesionActiva(Session["user"]))
             {
-                
+
                 if (!(Seguridad.sesionActiva(Session["user"])))
                     Response.Redirect("login.aspx");
                 else
@@ -26,7 +26,7 @@ namespace TiendaDeArticulos
                     User user = (User)Session["user"];
                     lblUser.Text = user.Email;
                     if (!string.IsNullOrEmpty(user.ImagenPerfil))
-                        imgAvatar.ImageUrl = "~/Images/" + user.ImagenPerfil;
+                        imgAvatar.ImageUrl = "~/Images/" + user.ImagenPerfil + "?v=" + DateTime.Now.Ticks.ToString();
                 }
             }
 
@@ -48,7 +48,7 @@ namespace TiendaDeArticulos
                 }
                 else
                 {
-                    Session.Add("error", "password o email incorrectos");
+                    Session.Add("error", "Password o e-mail incorrectos");
                     Response.Redirect("Error.aspx", false);
                 }
 
@@ -65,8 +65,8 @@ namespace TiendaDeArticulos
         {
             try
             {
-                Session.Remove("user");
-                Response.Redirect("Default.aspx", false);
+                    Session.Remove("user");
+                    Response.Redirect("Default.aspx", false);
             }
             catch (Exception ex)
             {

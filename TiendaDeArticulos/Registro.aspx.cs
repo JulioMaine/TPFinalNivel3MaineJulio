@@ -20,6 +20,13 @@ namespace TiendaDeArticulos
         {
             try
             {
+                Page.Validate();
+                if (!Page.IsValid)
+                    return;
+
+                if (txtEmail.Text == "" || txtPassword.Text == "")
+                    return;
+
                 User nuevoUser = new User();
                 UserNegocio nuevo = new UserNegocio();
 

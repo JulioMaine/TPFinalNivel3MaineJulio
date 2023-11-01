@@ -3,46 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Forms;
 
 namespace helpers
 {
     public static class Helper
     {
-        // Método para ocultar columnas.
-        // Maxi, les hice sobrecargas para poder ocultar más de una columna, no sé si está bien hecho pero no se me
-        // ocurrió otra forma de hacerlo, si tenés otra idea mejor la espero en la devolución del tp, gracias!
-        public static void ocultarColumnas(DataGridView dataGridView, string columna1)
-        {
-            dataGridView.Columns[columna1].Visible = false;        
-        }
-        public static void ocultarColumnas(DataGridView dataGridView, string columna1, string columna2)
-        {
-            dataGridView.Columns[columna1].Visible = false;
-            dataGridView.Columns[columna2].Visible = false;
-        }
-
-        public static void ocultarColumnas(DataGridView dataGridView, string columna1, string columna2, string columna3)
-        {
-            dataGridView.Columns[columna1].Visible = false;
-            dataGridView.Columns[columna2].Visible = false;
-            dataGridView.Columns[columna3].Visible = false;
-        }
-
-
-        // Metodo para cargar imagenes.
-        public static void cargarImagen (PictureBox pictureBox, string urlImagen)
-        {
-            try
-            {
-                pictureBox.Load(urlImagen);
-            }
-            catch (Exception)
-            {
-
-                pictureBox.Load("https://www.campana.gob.ar/wp-content/uploads/2022/05/placeholder-1.png");
-            }
-        }
 
         // Método para validar solo números.
         public static  bool soloNumeros(string cadena)
@@ -68,7 +33,7 @@ namespace helpers
             {
                if (char.IsPunctuation(item))
                 {
-                    MessageBox.Show("Por favor ingrese el número sin puntos (ejemplo: 25000,25)");
+                    
                     return true;
                 }
             }
@@ -96,7 +61,7 @@ namespace helpers
             {
                 if ((item.ToString() == ","))
                 {
-                    MessageBox.Show("Por favor ingrese el número con '.' (ejemplo: 25000.25)");
+                   
                     return true;
                 }
             }
@@ -117,28 +82,12 @@ namespace helpers
                 }
                 if (bandera > 1)
                 {
-                    MessageBox.Show("Por favor ingrese el número sin puntos (ejemplo: 25000.00)");
+                   
                     return true;
                 }
                     
             }
             return false;
-        }
-
-
-
-
-        // Metodo para validar el data grid view.
-        // Este método no sé si es correcto ponerlo en la clase Helper, lo hice porque lo tuve que usar muchas veces.
-        // Aclaro que lo utilizo para cuando él data grid view no tiene nada seleccionado, por ejemplo cuando filtras y queda
-        // la lista vacía.
-        public static bool validarDgv(DataGridView dataGridView)
-        {
-            if (dataGridView.CurrentRow != null)
-            {
-                return false;
-            }
-            return true;
         }
     }
 

@@ -14,20 +14,23 @@ namespace TiendaDeArticulos
         public List<Articulo> ListaArticulos { get; set; }
         protected void Page_Load(object sender, EventArgs e)
         {
-            ArticuloNegocio negocio = new ArticuloNegocio();
-            ListaArticulos = negocio.listar().FindAll(x => x.Categoria.Descripcion == "Media");
-
-            if (!IsPostBack)
+            try
             {
-                repRepetidor.DataSource = ListaArticulos;
-                repRepetidor.DataBind();
+                ArticuloNegocio negocio = new ArticuloNegocio();
+                ListaArticulos = negocio.listar().FindAll(x => x.Categoria.Descripcion == "Media");
+
+                if (!IsPostBack)
+                {
+                    repRepetidor.DataSource = ListaArticulos;
+                    repRepetidor.DataBind();
+                }
+
             }
-
-        }
-
-        protected void btnDetalle_Click(object sender, EventArgs e)
-        {
-
+            catch (Exception ex)
+            {
+                Session.Add("error", ex);
+                Response.Redirect("Error.aspx", false);
+            }
         }
     }
 }

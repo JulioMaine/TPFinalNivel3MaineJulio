@@ -134,6 +134,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helper.cs" />
     <Compile Include="ListaDeArticulos.aspx.cs">
       <DependentUpon>ListaDeArticulos.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

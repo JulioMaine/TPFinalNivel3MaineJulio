@@ -198,11 +198,13 @@ namespace negocio
                             consulta += "A.Nombre like '%" + filtro + "%'";
                             break;
                         default:
+                            consulta += "A.Descripcion like '%" + "" + "%'";
                             break;
                     }
                 } 
                 else if (campo == "Precio")
                 {
+                    
                     switch (criterio)
                     {
                         case "Mayor o igual a:":
@@ -213,6 +215,9 @@ namespace negocio
                             break;
                         case "Precio exacto:":
                             consulta += "A.Precio = " + filtro;
+                            break;
+                        default:
+                            consulta += "A.Precio = " + 0;
                             break;
                     }
                 }
@@ -230,6 +235,7 @@ namespace negocio
                             consulta += "A.Descripcion like '%" + filtro + "%'";
                             break;
                         default:
+                            consulta += "A.Descripcion like '%" + "" + "%'";
                             break;
                     }
                 }

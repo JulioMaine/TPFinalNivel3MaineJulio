@@ -13,25 +13,32 @@ namespace TiendaDeArticulos
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-
-            // Lo que tengo que hacer es traer la tabla de favoritos y de ahi sacar los id para agregar/eliminar
-            if (!Seguridad.sesionActiva(Session["user"]))
+            try
             {
-                Response.Redirect("Login.aspx", false);
-                return;
+                if (!Seguridad.sesionActiva(Session["user"]))
+                {
+                    Response.Redirect("Login.aspx", false);
+                    return;
+                }
+
+                ArticuloNegocio negocio = new ArticuloNegocio();
+                FavoritoNegocio favorito = new FavoritoNegocio();
+                User user = (User)Session["user"];
+
+                if (Request.QueryString["Id"] != null && !IsPostBack)
+                {
+                    favorito.insertarFavorito(user.Id.ToString(), Request.QueryString["Id"].ToString());
+                }
+
+                repRepetidor.DataSource = negocio.listarFavoritos(user.Id.ToString());
+                repRepetidor.DataBind();
+
             }
-
-            ArticuloNegocio negocio = new ArticuloNegocio();
-            FavoritoNegocio favorito = new FavoritoNegocio();
-            User user = (User)Session["user"];
-
-            if (Request.QueryString["Id"] != null && !IsPostBack)
+            catch (Exception ex)
             {
-                favorito.insertarFavorito(user.Id.ToString(), Request.QueryString["Id"].ToString());
+                Session.Add("error", ex);
+                Response.Redirect("Error.aspx", false);
             }
-
-            repRepetidor.DataSource = negocio.listarFavoritos(user.Id.ToString());
-            repRepetidor.DataBind();
 
         }
 

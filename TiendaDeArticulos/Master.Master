@@ -13,7 +13,7 @@
     <asp:ContentPlaceHolder ID="head" runat="server">
     </asp:ContentPlaceHolder>
 </head>
-<body  style="background: url(https://c.wallhere.com/photos/4b/82/1920x1080_px_8_abstract_computers_Green_logo_microsoft_Operating-1493761.jpg!d) no-repeat center center fixed; background-size: cover;"  >
+<body style="background: url(https://c.wallhere.com/photos/07/9c/Outer_Wilds_space_stars_video_games_dark_black_screen_shot_minimalism-2228102.jpg!d) no-repeat center center fixed; background-size: cover;">
     <form runat="server" id="form1">
         <div>
             <nav class="navbar navbar-expand-lg bg-body-secondary" data-bs-theme="dark">
@@ -61,12 +61,12 @@
                             <ul class="navbar-nav me-2">
                                 <li class="nav-item dropdown">
                                     <a href="#" class="dropdown-toggle btn btn-success" role="button" data-bs-toggle="dropdown" aria-expanded="false">Ingresar</a>
-                                    <ul class="dropdown-menu bg-body-tertiary" style="height: 170px; width: 260px; margin-top: 9px">
+                                    <ul class="dropdown-menu bg-body-tertiary" style="height: 170px; width: 260px; margin-top: 10px">
                                         <li>
-                                            <asp:TextBox ID="txtUser" runat="server" CssClass="form-control m-2" Style="width: 240px"></asp:TextBox>
+                                            <asp:TextBox ID="txtUser" placeholder="E-mail" runat="server" CssClass="form-control m-2 fs-6 text-white bg-dark" Style="width: 240px"></asp:TextBox>
                                         </li>
                                         <li>
-                                            <asp:TextBox ID="txtPassword" TextMode="Password" runat="server" CssClass="form-control m-2" Style="width: 240px"></asp:TextBox>
+                                            <asp:TextBox ID="txtPassword" placeholder="Contraseña" TextMode="Password" runat="server" CssClass="form-control text-white m-2 fs-6 bg-dark" Style="width: 240px"></asp:TextBox>
                                         </li>
                                         <li>
                                             <asp:Button ID="btnEntrar" CssClass="btn btn-danger m-2" runat="server" OnClick="btnEntrar_Click" Text="Entrar" />
@@ -74,11 +74,11 @@
                                     </ul>
                                 </li>
                             </ul>
-                            <a id="btnRegistrase" href="Registro.aspx" class="btn btn-primary me-3">Registrase</a>
+                            <a id="btnRegistrase" href="Registro.aspx" class="btn btn-primary me-3">Registrarse</a>
                             <% }
                                 else
                                 { %>
-                            <asp:Button ID="btnSalir" runat="server" class="btn btn-danger mx-2" Text="Salir" OnClick="btnSalir_Click" />
+                            <asp:Button ID="btnSalir" runat="server" class="btn btn-danger mx-2" Text="Salir" AutoPostBack="False" OnClick="btnSalir_Click" />
                             <asp:Label ID="lblUser" runat="server" CssClass="text-white me-2" Text=""></asp:Label>
                             <% } %>
                             <asp:Image ID="imgAvatar" runat="server" Style="width: 40px; height: 40px; margin-right: 15px; border-radius: 50%;" />

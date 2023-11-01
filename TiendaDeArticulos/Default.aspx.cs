@@ -14,24 +14,24 @@ namespace TiendaDeArticulos
         public List<Articulo> ListaArticulos { get; set; }
         protected void Page_Load(object sender, EventArgs e)
         {
-            ArticuloNegocio negocio = new ArticuloNegocio();
-            ListaArticulos = negocio.listar();
-            
-
-            if (!IsPostBack)
+            try
             {
-                repRepetidor.DataSource = ListaArticulos;
-                repRepetidor.DataBind();
+
+                ArticuloNegocio negocio = new ArticuloNegocio();
+                ListaArticulos = negocio.listar();
+
+
+                if (!IsPostBack)
+                {
+                    repRepetidor.DataSource = ListaArticulos;
+                    repRepetidor.DataBind();
+                }
             }
-
-            
-        }
-
-        protected void btnAgregarFavorito_Click(object sender, EventArgs e)
-        {
-            FavoritoNegocio negocio = new FavoritoNegocio();
-            User user = (User)Session["user"];
-            negocio.insertarFavorito(user.Id.ToString(), "3");
+            catch (Exception ex)
+            {
+                Session.Add("error", ex);
+                Response.Redirect("Error.aspx", false);
+            }
         }
     }
 }

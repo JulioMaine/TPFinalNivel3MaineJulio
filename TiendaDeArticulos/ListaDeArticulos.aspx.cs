@@ -7,6 +7,7 @@ using System.Web.UI.WebControls;
 using dominio;
 using negocio;
 
+
 namespace TiendaDeArticulos
 {
     public partial class ListaDeArticulos : System.Web.UI.Page
@@ -16,129 +17,192 @@ namespace TiendaDeArticulos
         public bool FiltroAvanzado { get; set; }
         protected void Page_Load(object sender, EventArgs e)
         {
-            FiltroAvanzado = ckbFiltroAvanzado.Checked;
-
-            if (!Seguridad.esAdmin(Session["user"]))
+            try
             {
-                Session.Add("error", "No eres admin");
-                Response.Redirect("Error.aspx", false); 
-            }
+                FiltroAvanzado = ckbFiltroAvanzado.Checked;
+
+                if (!Seguridad.esAdmin(Session["user"]))
+                {
+                    Session.Add("error", "No eres admin");
+                    Response.Redirect("Error.aspx", false);
+                }
 
 
-            // Guardo en Session las listas filtradas para que se carguen con el PageIndexChanging.
-            if (Session["listaFiltradaAvanzada"] != null)
-            {
-                dgvArticulos.DataSource = Session["listaFiltradaAvazada"];
-                dgvArticulos.DataBind();
-                btnBuscar_Click(sender, e);
-            }
-            if (Session["listaFiltradaRapida"] != null)
-            {
-                dgvArticulos.DataSource = Session["listaFiltradaRapida"];
-                dgvArticulos.DataBind();
-                txtFiltroRapido_TextChanged(sender, e);
-            }
-
-            if (!IsPostBack || !ckbFiltroAvanzado.Checked)
-            {
-                FiltroAvanzado = false;
-                ArticuloNegocio negocio = new ArticuloNegocio();
-                dgvArticulos.DataSource = negocio.listar();
-                dgvArticulos.DataBind();
+                // Guardo en Session las listas filtradas para que se carguen con el PageIndexChanging.
+                if (Session["listaFiltradaAvanzada"] != null)
+                {
+                    dgvArticulos.DataSource = Session["listaFiltradaAvazada"];
+                    dgvArticulos.DataBind();
+                    btnBuscar_Click(sender, e);
+                }
                 if (Session["listaFiltradaRapida"] != null)
                 {
                     dgvArticulos.DataSource = Session["listaFiltradaRapida"];
                     dgvArticulos.DataBind();
+                    txtFiltroRapido_TextChanged(sender, e);
                 }
 
+                if (!IsPostBack || !ckbFiltroAvanzado.Checked)
+                {
+                    FiltroAvanzado = false;
+                    ArticuloNegocio negocio = new ArticuloNegocio();
+                    dgvArticulos.DataSource = negocio.listar();
+                    dgvArticulos.DataBind();
+                    if (Session["listaFiltradaRapida"] != null)
+                    {
+                        dgvArticulos.DataSource = Session["listaFiltradaRapida"];
+                        dgvArticulos.DataBind();
+                    }
 
-                Session.Add("listaArticulos", negocio.listar());
+
+                    Session.Add("listaArticulos", negocio.listar());
+                }
+
+                if (!IsPostBack)
+                {
+                    //Para que esten precargados los valores del ddlCriterio
+                    ddlCriterio.Items.Clear();
+                    ddlCriterio.Items.Add("Empieza con:");
+                    ddlCriterio.Items.Add("Termina con:");
+                    ddlCriterio.Items.Add("Contiene:");
+                }
             }
-
-            if (!IsPostBack)
+            catch (Exception ex)
             {
-                //Para que esten precargados los valores del ddlCriterio
-                ddlCriterio.Items.Clear();
-                ddlCriterio.Items.Add("Empieza con:");
-                ddlCriterio.Items.Add("Termina con:");
-                ddlCriterio.Items.Add("Contiene:");
+                Session.Add("error", ex);
+                Response.Redirect("Error.aspx", false);
             }
         }
 
         protected void dgvArticulos_SelectedIndexChanged(object sender, EventArgs e)
         {
-            string id = dgvArticulos.SelectedDataKey.Value.ToString();
-            Response.Redirect("AltaArticulo.aspx?Id=" + id, false);
+            try
+            {
+                string id = dgvArticulos.SelectedDataKey.Value.ToString();
+                Response.Redirect("AltaArticulo.aspx?Id=" + id, false);
+
+            }
+            catch (Exception ex)
+            {
+                Session.Add("error", ex);
+                Response.Redirect("Error.aspx", false);
+            }
         }
 
         protected void ckbFiltroAvanzado_CheckedChanged(object sender, EventArgs e)
         {
-            FiltroAvanzado = ckbFiltroAvanzado.Checked;
-            txtFiltroRapido.Enabled = !FiltroAvanzado;
-            txtFiltroRapido.Text = "";
+            try
+            {
+                FiltroAvanzado = ckbFiltroAvanzado.Checked;
+                txtFiltroRapido.Enabled = !FiltroAvanzado;
+                txtFiltroRapido.Text = "";
+            }
+            catch (Exception ex)
+            {
+                Session.Add("error", ex);
+                Response.Redirect("Error.aspx", false);
+            }
         }
 
         protected void txtFiltroRapido_TextChanged(object sender, EventArgs e)
         {
-            List<Articulo> listaArticulos = (List<Articulo>)Session["listaArticulos"];
-            List<Articulo> listaFiltrada = listaArticulos.FindAll(x => x.Nombre.ToUpper().Contains(txtFiltroRapido.Text.ToUpper()));
-            dgvArticulos.DataSource = listaFiltrada;
-            dgvArticulos.DataBind();
+            try
+            {
+                List<Articulo> listaArticulos = (List<Articulo>)Session["listaArticulos"];
+                List<Articulo> listaFiltrada = listaArticulos.FindAll(x => x.Nombre.ToUpper().Contains(txtFiltroRapido.Text.ToUpper()));
+                dgvArticulos.DataSource = listaFiltrada;
+                dgvArticulos.DataBind();
 
-            Session.Add("listaFiltradaRapida", listaFiltrada);
-            Session.Remove("listaFiltradaAvanzada");
+                Session.Add("listaFiltradaRapida", listaFiltrada);
+                Session.Remove("listaFiltradaAvanzada");
+
+            }
+            catch (Exception ex)
+            {
+                Session.Add("error", ex);
+                Response.Redirect("Error.aspx", false);
+            }
 
         }
 
         protected void dgvArticulos_PageIndexChanging(object sender, GridViewPageEventArgs e)
         {
-            if (Session["listaFiltradaAvanzada"] == null && Session["listaFiltradaRapida"] == null)
+            try
             {
-                ArticuloNegocio negocio = new ArticuloNegocio();
-                dgvArticulos.DataSource = negocio.listar();
-                dgvArticulos.DataBind();
-            }
+                if (Session["listaFiltradaAvanzada"] == null && Session["listaFiltradaRapida"] == null)
+                {
+                    ArticuloNegocio negocio = new ArticuloNegocio();
+                    dgvArticulos.DataSource = negocio.listar();
+                    dgvArticulos.DataBind();
+                }
 
-            dgvArticulos.PageIndex = e.NewPageIndex;
-            dgvArticulos.DataBind();
+                dgvArticulos.PageIndex = e.NewPageIndex;
+                dgvArticulos.DataBind();
+
+            }
+            catch (Exception ex)
+            {
+                Session.Add("error", ex);
+                Response.Redirect("Error.aspx", false);
+            }
         }
 
         protected void ddlCampo_SelectedIndexChanged(object sender, EventArgs e)
         {
-            ddlCriterio.Items.Clear();
-            if (ddlCampo.SelectedValue == "Nombre" || ddlCampo.SelectedValue == "Descripción")
+            try
             {
-                ddlCriterio.Items.Add("Empieza con:");
-                ddlCriterio.Items.Add("Termina con:");
-                ddlCriterio.Items.Add("Contiene:");
+                ddlCriterio.Items.Clear();
+                if (ddlCampo.SelectedValue == "Nombre" || ddlCampo.SelectedValue == "Descripción")
+                {
+                    ddlCriterio.Items.Add("Empieza con:");
+                    ddlCriterio.Items.Add("Termina con:");
+                    ddlCriterio.Items.Add("Contiene:");
+                }
+                else if (ddlCampo.SelectedValue == "Precio")
+                {
+                    ddlCriterio.Items.Add("Mayor o igual a:");
+                    ddlCriterio.Items.Add("Menor o igual a:");
+                    ddlCriterio.Items.Add("Precio exacto:");
+                }
             }
-            else if (ddlCampo.SelectedValue == "Precio")
+            catch (Exception ex)
             {
-                ddlCriterio.Items.Add("Mayor o igual a:");
-                ddlCriterio.Items.Add("Menor o igual a:");
-                ddlCriterio.Items.Add("Precio exacto:");
+                Session.Add("error", ex);
+                Response.Redirect("Error.aspx", false);
             }
         }
 
         protected void btnBuscar_Click(object sender, EventArgs e)
         {
-            if (!string.IsNullOrEmpty(ddlCampo.SelectedValue) && !string.IsNullOrEmpty(ddlCriterio.SelectedValue))
+            try
             {
-                if(txtbFiltroAvanzado.Text == "")
+                if (!string.IsNullOrEmpty(ddlCampo.SelectedValue) && !string.IsNullOrEmpty(ddlCriterio.SelectedValue))
                 {
-                    ArticuloNegocio negocio2 = new ArticuloNegocio();
-                    dgvArticulos.DataSource = negocio2.listar();
+                    if (txtbFiltroAvanzado.Text == "")
+                    {
+                        ArticuloNegocio negocio2 = new ArticuloNegocio();
+                        dgvArticulos.DataSource = negocio2.listar();
+                        dgvArticulos.DataBind();
+                        return;
+                    }
+
+                    if (ddlCampo.Text == "Precio" && !helpers.Helper.soloNumeros(txtbFiltroAvanzado.Text))
+                        return;
+
+                    ArticuloNegocio negocio = new ArticuloNegocio();
+                    List<Articulo> listaFiltrada = negocio.filtrar(ddlCampo.SelectedValue.ToString(), ddlCriterio.SelectedValue.ToString(), txtbFiltroAvanzado.Text);
+                    dgvArticulos.DataSource = listaFiltrada;
                     dgvArticulos.DataBind();
-                    return;
+
+                    Session.Add("listaFiltradaAvanzada", listaFiltrada);
+                    Session.Remove("listaFiltradaRapida");
                 }
+            }
+            catch (Exception ex)
+            {
 
-                ArticuloNegocio negocio = new ArticuloNegocio();
-                List<Articulo> listaFiltrada = negocio.filtrar(ddlCampo.SelectedValue.ToString(), ddlCriterio.SelectedValue.ToString(), txtbFiltroAvanzado.Text);
-                dgvArticulos.DataSource = listaFiltrada;
-                dgvArticulos.DataBind();
-
-                Session.Add("listaFiltradaAvanzada", listaFiltrada);
-                Session.Remove("listaFiltradaRapida");
+                Session.Add("error", ex);
+                Response.Redirect("Error.aspx", false);
             }
 
         }

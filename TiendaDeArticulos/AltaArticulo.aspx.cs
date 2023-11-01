@@ -16,72 +16,104 @@ namespace TiendaDeArticulos
             txtbID.ReadOnly = true;
             btnEliminar.Visible = false;
 
-            if (!IsPostBack)
+            try
             {
-                CategoriaNegocio categorias = new CategoriaNegocio();
-                MarcaNegocio marcas = new MarcaNegocio();
+                if (!IsPostBack)
+                {
+                    CategoriaNegocio categorias = new CategoriaNegocio();
+                    MarcaNegocio marcas = new MarcaNegocio();
 
-                ddlCategoria.DataSource = categorias.listar();
-                ddlCategoria.DataValueField = "Id";
-                ddlCategoria.DataTextField = "Descripcion";
-                ddlCategoria.DataBind();
+                    ddlCategoria.DataSource = categorias.listar();
+                    ddlCategoria.DataValueField = "Id";
+                    ddlCategoria.DataTextField = "Descripcion";
+                    ddlCategoria.DataBind();
 
-                ddlMarca.DataSource = marcas.listar();
-                ddlMarca.DataValueField = "Id";
-                ddlMarca.DataTextField = "Descripcion";
-                ddlMarca.DataBind();
+                    ddlMarca.DataSource = marcas.listar();
+                    ddlMarca.DataValueField = "Id";
+                    ddlMarca.DataTextField = "Descripcion";
+                    ddlMarca.DataBind();
+                }
+                string id = Request.QueryString["Id"] != null ? Request.QueryString["Id"].ToString() : "";
+                if (id != "" && !IsPostBack)
+                {
+                    btnEliminar.Visible = true;
+                    btnAceptar.Text = "Modificar";
+                    ArticuloNegocio negocio = new ArticuloNegocio();
+                    Articulo articuloSeleccionado = negocio.listar(id)[0];
+
+                    txtbID.Text = articuloSeleccionado.Id.ToString();
+                    txtbNombre.Text = articuloSeleccionado.Nombre;
+                    txtbCodigo.Text = articuloSeleccionado.Codigo;
+                    txtbDescripcion.Text = articuloSeleccionado.Descripcion;
+                    txtbUrlImagen.Text = articuloSeleccionado.ImagenUrl;
+                    imgArticulo.ImageUrl = articuloSeleccionado.ImagenUrl;
+                    txtPrecio.Text = articuloSeleccionado.Precio.ToString("0.00");
+                    ddlCategoria.SelectedValue = articuloSeleccionado.Categoria.Descripcion;
+                    ddlMarca.SelectedValue = articuloSeleccionado.Marca.Descripcion;
+                }
             }
-            string id = Request.QueryString["Id"] != null ? Request.QueryString["Id"].ToString() : "";
-            if (id != "" && !IsPostBack)
+            catch (Exception ex)
             {
-                btnEliminar.Visible = true;
-                btnAceptar.Text = "Modificar";
-                ArticuloNegocio negocio = new ArticuloNegocio();
-                Articulo articuloSeleccionado = negocio.listar(id)[0];
-
-                txtbID.Text = articuloSeleccionado.Id.ToString();
-                txtbNombre.Text = articuloSeleccionado.Nombre;
-                txtbCodigo.Text = articuloSeleccionado.Codigo;
-                txtbDescripcion.Text = articuloSeleccionado.Descripcion;
-                txtbUrlImagen.Text = articuloSeleccionado.ImagenUrl;
-                imgArticulo.ImageUrl = articuloSeleccionado.ImagenUrl;
-                txtPrecio.Text = articuloSeleccionado.Precio.ToString("0.00");
-                ddlCategoria.SelectedValue = articuloSeleccionado.Categoria.Descripcion;
-                ddlMarca.SelectedValue = articuloSeleccionado.Marca.Descripcion;
+                Session.Add("error", ex);
+                Response.Redirect("Error.aspx", false);
             }
         }
 
         protected void btnAceptar_Click(object sender, EventArgs e)
         {
-            ArticuloNegocio negocio = new ArticuloNegocio();
-            Articulo articulo = new Articulo();
+            try
+            {
+                Page.Validate();
+                if (!Page.IsValid)
+                    return;
 
-            articulo.Nombre = txtbNombre.Text;
-            articulo.Descripcion = txtbDescripcion.Text;
-            articulo.Codigo = txtbCodigo.Text;
-            articulo.ImagenUrl = txtbUrlImagen.Text;
-            articulo.Precio = decimal.Parse(txtPrecio.Text);
-            articulo.Categoria = new Categoria();
-            articulo.Categoria.Id = int.Parse(ddlCategoria.SelectedValue);
-            articulo.Marca = new Marca();
-            articulo.Marca.Id = int.Parse(ddlMarca.SelectedValue);
+                ArticuloNegocio negocio = new ArticuloNegocio();
+                Articulo articulo = new Articulo();
 
-            if (Request.QueryString["Id"] != null) 
-            { 
-                articulo.Id = int.Parse(txtbID.Text);
-                negocio.modificar(articulo);
+                 if (string.IsNullOrEmpty(txtPrecio.Text))
+                    return;
+
+                articulo.Nombre = txtbNombre.Text;
+                articulo.Descripcion = txtbDescripcion.Text;
+                articulo.Codigo = txtbCodigo.Text;
+                articulo.ImagenUrl = txtbUrlImagen.Text;
+                articulo.Precio = decimal.Parse(txtPrecio.Text);
+                articulo.Categoria = new Categoria();
+                articulo.Categoria.Id = int.Parse(ddlCategoria.SelectedValue);
+                articulo.Marca = new Marca();
+                articulo.Marca.Id = int.Parse(ddlMarca.SelectedValue);
+
+                if (Request.QueryString["Id"] != null)
+                {
+                    articulo.Id = int.Parse(txtbID.Text);
+                    negocio.modificar(articulo);
+                }
+                else
+                    negocio.agregarArticulo(articulo);
+
+                Response.Redirect("ListaDeArticulos.aspx", false);
             }
-            else
-                negocio.agregarArticulo(articulo);
-
-            Response.Redirect("ListaDeArticulos.aspx", false);
+            catch (Exception ex)
+            {
+                Session.Add("error", ex);
+                Response.Redirect("Error.aspx", false);
+            }
         }
 
         protected void btnEliminar_Click(object sender, EventArgs e)
         {
-            ArticuloNegocio negocio = new ArticuloNegocio();
-            negocio.eliminar(int.Parse(Request.QueryString["Id"]));
-            Response.Redirect("ListaDeArticulos.aspx", false);
+            try
+            {
+                ArticuloNegocio negocio = new ArticuloNegocio();
+                negocio.eliminar(int.Parse(Request.QueryString["Id"]));
+                Response.Redirect("ListaDeArticulos.aspx", false);
+
+            }
+            catch (Exception ex)
+            {
+                Session.Add("error", ex);
+                Response.Redirect("Error.aspx", false);
+            }
         }
     }
 }

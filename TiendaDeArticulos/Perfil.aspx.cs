@@ -27,7 +27,7 @@ namespace TiendaDeArticulos
 
                         if (!string.IsNullOrEmpty(user.ImagenPerfil))
                         {
-                            imgPerfil.ImageUrl = "~/Images/" + user.ImagenPerfil;
+                            imgPerfil.ImageUrl = "~/Images/" + user.ImagenPerfil + "?v=" + DateTime.Now.Ticks.ToString();
                         }
                     }
                 }
@@ -35,7 +35,7 @@ namespace TiendaDeArticulos
             catch (Exception ex)
             {
                 Session.Add("error", ex.ToString());
-                Response.Redirect("Error.aspx");
+                Response.Redirect("Error.aspx",false);
             }
         }
 
@@ -51,7 +51,7 @@ namespace TiendaDeArticulos
                 {
                     txtImage.PostedFile.SaveAs(ruta + "Perfil-" + user.Id + ".jpg");
                     user.ImagenPerfil = "Perfil-" + user.Id + ".jpg";
-                    imgPerfil.ImageUrl = "~/Images/" + user.ImagenPerfil;
+                    imgPerfil.ImageUrl = "~/Images/" + user.ImagenPerfil + "?v=" + DateTime.Now.Ticks.ToString();
                 }
 
                 user.Nombre = txtNombre.Text;
